@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -24,7 +25,14 @@ namespace PDCgen
                 {
                     if (flightplanData[i].IndexOf("Callsign:") != -1)
                     {
-                        ParsedData[0] = flightplanData[i].Substring(10);
+                        string tcallsign = flightplanData[i].Substring(10);
+                        Regex regex = new Regex("[^a-zA-Z0-9()]");
+                        string callsign = regex.Replace(tcallsign, "");
+                        if (callsign.IndexOf('(') != -1)
+                        {
+                            callsign = callsign.Substring(0, callsign.IndexOf('('));
+                        }
+                        ParsedData[0] = callsign;
                         RouteData[0] = ParsedData[0];
                     }
                     else if (flightplanData[i].IndexOf("Flight Rules:") != -1)
@@ -91,7 +99,7 @@ namespace PDCgen
         {
             string compiledString;
 
-            for (int i = 0; i < route.Length; i++)
+            for (int i = 0; i < route.Length-2; i++)
             {
                 try {
                     if (char.IsDigit(route[i]) == false)
@@ -116,9 +124,17 @@ namespace PDCgen
                     string[] tempSeperation = compiledString.Split(' ');
                     compiledString = tempSeperation[0];
                     compiledString = compiledString.Trim();
-                    compiledString = compiledString.TrimEnd(',', '>');
-                    string pattern = "^[a-zA-Z0-9]+$";
-                    if (Regex.IsMatch(compiledString, pattern) == false) { continue; }
+                    compiledString = compiledString.TrimEnd(',', '>', '/');
+                    if (compiledString.IndexOf('/') != -1)
+                    {
+                        compiledString = compiledString.Substring(0, compiledString.IndexOf('/'));
+                    }
+                    //string pattern = "^[a-zA-Z0-9]+$";
+                    //if (Regex.IsMatch(compiledString, pattern) == false) { continue; }
+                    if (compiledString.Length<5)
+                    {
+                        continue;
+                    }
                     return compiledString;
                 }
                 catch

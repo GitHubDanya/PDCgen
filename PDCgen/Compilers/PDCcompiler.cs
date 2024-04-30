@@ -26,7 +26,7 @@ namespace PDCgen
             string compiledPDC = string.Empty;
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("CLR TO " + flightplanReader.ParsedData[3]);
+            sb.Append(flightplanReader.ParsedData[0]+" CLR TO " + flightplanReader.ParsedData[3]);
             if (mainWindow.designatorRWY.Text != "")
             {
                 sb.Append(" RWY " + mainWindow.designatorRWY.Text);
