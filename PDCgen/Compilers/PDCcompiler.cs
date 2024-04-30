@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows;
 using System.Text.RegularExpressions;
+using PDCgen;
 
 namespace PDCgen
 {
@@ -22,55 +23,63 @@ namespace PDCgen
         }
         public string compilePDC()
         {
-            string compiledPDC;
+            string compiledPDC = string.Empty;
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(flightplanReader.RouteData[0]+" ");
+            sb.Append("CLR TO " + flightplanReader.ParsedData[3]);
+            if (mainWindow.designatorRWY.Text != "")
+            {
+                sb.Append(" RWY " + mainWindow.designatorRWY.Text);
+            }
+            if (flightplanReader.ParsedData[5] != "nil")
+            {
+                sb.Append(" DEP " + flightplanReader.ParsedData[5]+" ");
+            } else
+            {
+                sb.Append(" FLY RWY HDG EXP VECTORS CLB ");
+                int altitude;
 
+                if (int.TryParse(flightplanReader.ParsedData[6], out altitude))
+                {
+                    if (altitude <= 30)
+                    {
+                        sb.Append(altitude + "00FT ");
+                    }
+                    else if (altitude >= 1000)
+                    {
+                        sb.Append(altitude + "FT ");
+                    }
+                    else
+                    {
+                        sb.Append("FL" + altitude + " ");
+                    }
+                }
+            }
+
+            if (mainWindow.designatorFRQ.Text != "")
+            {
+                sb.Append("DEP ON "+mainWindow.designatorFRQ.Text+" ");
+            }
+
+            sb.Append("SQUAWK "+mainWindow.designatorSQK.Text+" ATIS "+mainWindow.ATISinfo.Text);
+            
             if (mainWindow.StartupInPDC)
             {
-                sb.Append(" STARTUP APPROVED ");
-            }
-
-            sb.Append("CLEARED "+flightplanReader.RouteData[3]+" ");
-
-            if (flightplanReader.RouteData[5] != "nil")
+                sb.Append(" FOR PUSH CALL FREQ ");
+            } else
             {
-                sb.Append(flightplanReader.RouteData[5]+" DEPARTURE FPL RTE CLB VIA SID ");
-            }
-            else { sb.Append("FLY RWY HDG EXP VECTORS THEN FPL RTE CLIMB "); }
-
-            int altitude;
-
-            if (int.TryParse(flightplanReader.RouteData[6], out altitude))
-            {
-                if (altitude <= 30)
-                {
-                    sb.Append(altitude+"00FT ");
-                }
-                else if (altitude >= 1000)
-                {
-                    sb.Append(altitude+"FT ");
-                }
-                else
-                {
-                    sb.Append("FL"+altitude+" ");
-                }
+                sb.Append(" WHEN RDY CALL FREQ ");
             }
 
-            if (mainWindow.designatorFRQ.Visibility == Visibility.Visible)
-            {
-                sb.Append("DEPARTURE ON "+mainWindow.designatorFRQ.Text+" ");
-            }
+            sb.Append(mainWindow.designatorIFRQ.Text + " IF UNABLE REVERT TO VOICE");
 
-            sb.Append("SQK "+mainWindow.designatorSQK.Text+" ATIS "+mainWindow.ATISinfo.Text+" WHEN READY CALL "+mainWindow.designatorIFRQ.Text+" | DO NOT READBACK");
             compiledPDC = sb.ToString();
             string newCompiledPDC = compiledPDC.Replace("\r", "");
-
-            mainWindow.outputTextBox.Text = newCompiledPDC;
+            compiledPDC = newCompiledPDC.ToUpper();
+            mainWindow.outputTextBox.Text = compiledPDC;
             mainWindow.UpdateLayout();
 
-            return newCompiledPDC.ToUpper();
+            return compiledPDC;
         }
 
         public string randomizeSqwk()
@@ -84,3 +93,65 @@ namespace PDCgen
         }
     }
 }
+
+//sb.Append(flightplanReader.ParsedData[0] + " ");
+
+//if (mainWindow.StartupInPDC)
+//{
+//    sb.Append("STARTUP APPROVED ");
+//}
+
+//sb.Append("CLEARED " + flightplanReader.ParsedData[3] + " ");
+
+//if (flightplanReader.ParsedData[5] != "nil")
+//{
+//    sb.Append(flightplanReader.ParsedData[5] + " DEPARTURE "); //FPL RTE CLB VIA SID "
+//    if (mainWindow.designatorRWY.Text != "")
+//    {
+//        sb.Append("RWY " + mainWindow.designatorRWY.Text + " FPL RTE CLB VIA SID ");
+//    }
+//    else
+//    {
+//        sb.Append("FPL RTE CLB VIA SID ");
+//    }
+//}
+//else if (mainWindow.designatorRWY.Text != "")
+//{
+//    sb.Append("RWY " + mainWindow.designatorRWY.Text + " ");
+//}
+//else
+//{
+//    sb.Append("FLY RWY HDG EXP VECTORS THEN FPL RTE CLIMB ");
+//}
+
+
+//int altitude;
+
+//if (int.TryParse(flightplanReader.ParsedData[6], out altitude))
+//{
+//    if (altitude <= 30)
+//    {
+//        sb.Append(altitude + "00FT ");
+//    }
+//    else if (altitude >= 1000)
+//    {
+//        sb.Append(altitude + "FT ");
+//    }
+//    else
+//    {
+//        sb.Append("FL" + altitude + " ");
+//    }
+//}
+
+//if (mainWindow.designatorFRQ.Visibility == Visibility.Visible)
+//{
+//    sb.Append("DEPARTURE ON " + mainWindow.designatorFRQ.Text + " ");
+//}
+//sb.Append("SQK " + mainWindow.designatorSQK.Text + " ATIS " + mainWindow.ATISinfo.Text + " WHEN READY CALL " + mainWindow.designatorIFRQ.Text + " . . . RMK DO NOT READBACK");
+//compiledPDC = sb.ToString();
+//string newCompiledPDC = compiledPDC.Replace("\r", "");
+//compiledPDC = newCompiledPDC.ToUpper();
+//mainWindow.outputTextBox.Text = compiledPDC;
+//mainWindow.UpdateLayout();
+
+//return compiledPDC;

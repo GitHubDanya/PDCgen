@@ -129,6 +129,7 @@ namespace PDCgen
             mainWindow.designatorRWY.Visibility = Visibility.Collapsed;
             mainWindow.RWYlbl.Visibility = Visibility.Collapsed;
             data.freqRow = getPositionOfOptionalValue("designatorFRQ").ToString();
+            mainWindow.designatorRWY.Text = "";
             mainWindow.UpdateLayout();
             compiler.compilePDC();
         }
@@ -148,6 +149,7 @@ namespace PDCgen
             mainWindow.designatorGrid.RowDefinitions.RemoveAt(1);
             mainWindow.designatorFRQ.Visibility = Visibility.Collapsed;
             mainWindow.FREQlbl.Visibility = Visibility.Collapsed;
+            mainWindow.designatorFRQ.Text = "";
             mainWindow.UpdateLayout();
             compiler.compilePDC();
         }
@@ -178,6 +180,7 @@ namespace PDCgen
 
         public void recompile(object sender, RoutedEventArgs e)
         {
+            reader.parseToParsedData();
             compiler.compilePDC();
         }
     }

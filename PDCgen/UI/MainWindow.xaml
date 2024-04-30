@@ -43,7 +43,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Content="ATIS Information:" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox x:Name="ATISinfo" Width="20" Height="20" Margin="1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="ATISinfo" Width="20" Height="20" Margin="1" HorizontalAlignment="Right" VerticalAlignment="Center" TextChanged="recompile"/>
                     <Label Content="RWY in PDC:" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1"/>
                     <CheckBox x:Name="rwyInPDC" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1" Checked="rwyInPDC_Checked" Unchecked="rwyInPDC_Unchecked"/>
                 </Grid>
@@ -64,34 +64,34 @@
                        Grid.Row="0" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" TextChanged="recompile"/>
                     <Label Content="Departure:" FontSize="14" Grid.Row="1" VerticalAlignment="Center" Height="33"/>
                     <TextBox x:Name="designatorDEP" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="1" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0"/>
+                       Grid.Row="1" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" TextChanged="recompile"/>
 
                     <Label Content="Arrival:" FontSize="14" Grid.Row="2" VerticalAlignment="Center" Height="33"/>
                     <TextBox x:Name="designatorARR" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="2" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0"/>
+                       Grid.Row="2" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" TextChanged="recompile"/>
 
                     <Label Content="SID:" FontSize="14" Grid.Row="3" VerticalAlignment="Center" Height="33"/>
                     <TextBox x:Name="designatorSID" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="3" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0"/>
+                       Grid.Row="3" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" TextChanged="recompile"/>
 
                     <Label Content="Squawk:" FontSize="14" Grid.Row="4" VerticalAlignment="Center" Height="33"/>
                     <TextBox x:Name="designatorSQK" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="4" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0"/>
+                       Grid.Row="4" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" TextChanged="recompile"/>
 
                     <Label Content="Initial Freq:" FontSize="14" Grid.Row="5" VerticalAlignment="Center" Height="33"/>
                     <TextBox x:Name="designatorIFRQ" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="5" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0"/>
+                       Grid.Row="5" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" TextChanged="recompile"/>
                     <Label Content="Initial Alt:" FontSize="14" Grid.Row="6" VerticalAlignment="Center" Height="33"/>
                     <TextBox x:Name="designatorALT" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="6" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0"/>
+                       Grid.Row="6" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" TextChanged="recompile"/>
 
                     <Label x:Name="RWYlbl" Content="Runway:" FontSize="14" Grid.Row="{Binding rwyRow}" VerticalAlignment="Center" Height="33" Visibility="Collapsed"/>
                     <TextBox x:Name="designatorRWY" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="{Binding rwyRow}" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" Visibility="Collapsed"/>
+                       Grid.Row="{Binding rwyRow}" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" Visibility="Collapsed" TextChanged="recompile"/>
 
                     <Label x:Name="FREQlbl" Content="Dep. on:" FontSize="14" Grid.Row="{Binding freqRow}" VerticalAlignment="Center" Height="33" Visibility="Collapsed"/>
                     <TextBox x:Name="designatorFRQ" HorizontalAlignment="Right" TextWrapping="Wrap" Text="" VerticalAlignment="Center"
-                       Grid.Row="{Binding freqRow}" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" Visibility="Collapsed"/>
+                       Grid.Row="{Binding freqRow}" FontSize="14" Height="20" Width="60" TextAlignment="Center" Margin="0 0 5 0" Visibility="Collapsed" TextChanged="recompile"/>
                 </Grid>
                 
                
